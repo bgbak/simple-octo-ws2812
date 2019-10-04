@@ -95,11 +95,12 @@ void loop() {
                 //   }
                 // }
                 const size_t capacity = JSON_OBJECT_SIZE(1) + JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(7);
-                DynamicJsonBuffer jsonBuffer(capacity);
+                DynamicJsonDocument root(capacity);
 
                 // Parse JSON object
-                JsonObject& root = jsonBuffer.parseObject(payload);
-                if (!root.success()) {
+                
+                auto error = deserializeJson(root, payload);
+                if (error) {
                   Serial.println(F("Parsing failed!"));
                   return;
                 }
