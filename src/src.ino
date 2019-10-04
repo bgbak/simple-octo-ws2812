@@ -151,6 +151,7 @@ void loop() {
         USE_SERIAL.println("");
         USE_SERIAL.println("WL_CONNECT_FAILED");
         USE_SERIAL.println("Please Check Password");
+        modus = 8; //flash_blue
       }
       else
       {
@@ -197,7 +198,14 @@ void loop() {
       flash(&last, &stage, length);
       break;
     }
-
+  case 7:{
+    flash_pink(&last, &stage, length);
+    break;
+  }
+  case 8:{
+    flash_blue(&last, &stage, length);
+    break;
+  }
   default: {
 
       break;
@@ -400,6 +408,55 @@ void flash(uint32_t* lastmillis, uint8_t* stage, uint8_t length) {
     if (*stage == 0) {
       for (int i = 0; i < length; i++) {
         LED.setPixelColor(i, 255, 255, 255);
+      }
+      LED.show();
+      *stage = 1;
+    }
+    else {
+      if (*stage == 1) {
+        for (int i = 0; i < length; i++) {
+          LED.setPixelColor(i, 0, 0, 0);
+        }
+        LED.show();
+        *stage = 0;
+      }
+    }
+  }
+}
+void flash_blue(uint32_t* lastmillis, uint8_t* stage, uint8_t length) {
+
+  unsigned long  currentmillis = millis();
+
+  if ((currentmillis - *lastmillis) >= 40 ) {
+    *lastmillis = millis();
+    if (*stage == 0) {
+      for (int i = 0; i < length; i++) {
+        LED.setPixelColor(i, 0, 255, 0);
+      }
+      LED.show();
+      *stage = 1;
+    }
+    else {
+      if (*stage == 1) {
+        for (int i = 0; i < length; i++) {
+          LED.setPixelColor(i, 0, 0, 0);
+        }
+        LED.show();
+        *stage = 0;
+      }
+    }
+  }
+}
+
+void flash_pink(uint32_t* lastmillis, uint8_t* stage, uint8_t length) {
+
+  unsigned long  currentmillis = millis();
+
+  if ((currentmillis - *lastmillis) >= 40 ) {
+    *lastmillis = millis();
+    if (*stage == 0) {
+      for (int i = 0; i < length; i++) {
+        LED.setPixelColor(i, 255, 0, 255);
       }
       LED.show();
       *stage = 1;
