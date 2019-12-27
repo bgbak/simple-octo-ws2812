@@ -100,7 +100,7 @@ void loop() {
                 // Parse JSON object
                 JsonObject& root = jsonBuffer.parseObject(payload);
                 if (!root.success()) {
-                  Serial.println(F("Parsing failed!"));
+                  USE_SERIAL.println(F("Parsing failed!"));
                   return;
                 }
 
